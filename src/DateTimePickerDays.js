@@ -10,6 +10,7 @@ export default class DateTimePickerDays extends Component {
     selectedDate: PropTypes.object.isRequired,
     showToday: PropTypes.bool,
     daysOfWeekDisabled: PropTypes.array,
+    dayOverrides: PropTypes.array,
     setSelectedDate: PropTypes.func.isRequired,
     showMonths: PropTypes.func.isRequired,
     minDate: PropTypes.object,
@@ -21,7 +22,7 @@ export default class DateTimePickerDays extends Component {
   }
 
   renderDays = () => {
-    var cells, classes, days, html, month, nextMonth, prevMonth, minDate, maxDate, row, year;
+    var cells, classes, days, html, month, nextMonth, prevMonth, minDate, maxDate, row, year, dayOverride;
     year = this.props.viewDate.year();
     month = this.props.viewDate.month();
     prevMonth = this.props.viewDate.clone().subtract(1, "months");
@@ -53,9 +54,25 @@ export default class DateTimePickerDays extends Component {
           classes.today = true;
         }
       }
-      if ((minDate && prevMonth.isBefore(minDate)) || (maxDate && prevMonth.isAfter(maxDate))) {
+      if (minDate && prevMonth.isBefore(minDate) || maxDate && prevMonth.isAfter(maxDate)) {
         classes.disabled = true;
+      } else if (this.props.daysOfWeekDisabled.length > 0) {
+        classes.disabled = this.props.daysOfWeekDisabled.indexOf(prevMonth.day()) !== -1;
       }
+      if (this.props.dayOverrides.length > 0) {
+        dayOverride = this.props.dayOverrides.find(function (override) {
+          return moment(override.date).isSame(prevMonth);
+        });
+
+        if (dayOverride && dayOverride.open) {
+          classes.disabled = false;
+        }
+
+        if (dayOverride && (dayOverride.open === false)) {
+          classes.disabled = true;
+        }
+      }
+
       if (this.props.daysOfWeekDisabled.length > 0) classes.disabled = this.props.daysOfWeekDisabled.indexOf(prevMonth.day()) !== -1;
       cells.push(<td key={prevMonth.month() + "-" + prevMonth.date()} className={classnames(classes)} onClick={this.props.setSelectedDate}>{prevMonth.date()}</td>);
       if (prevMonth.weekday() === moment().endOf("week").weekday()) {

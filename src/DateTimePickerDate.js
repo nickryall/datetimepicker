@@ -15,6 +15,7 @@ export default class DateTimePickerDate extends Component {
       PropTypes.number
     ]),
     daysOfWeekDisabled: PropTypes.array,
+    dayOverrides: PropTypes.array,
     setSelectedDate: PropTypes.func.isRequired,
     subtractYear: PropTypes.func.isRequired,
     addYear: PropTypes.func.isRequired,
@@ -84,6 +85,7 @@ export default class DateTimePickerDate extends Component {
       <DateTimePickerDays
             addMonth={this.props.addMonth}
             daysOfWeekDisabled={this.props.daysOfWeekDisabled}
+            dayOverrides={this.props.dayOverrides}
             maxDate={this.props.maxDate}
             minDate={this.props.minDate}
             selectedDate={this.props.selectedDate}
