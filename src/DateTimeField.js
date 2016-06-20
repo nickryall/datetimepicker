@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from "react";
 import moment from "moment";
-import { Glyphicon } from "react-bootstrap";
 import DateTimePicker from "./DateTimePicker.js";
 import Constants from "./Constants.js";
 
@@ -51,7 +50,7 @@ export default class DateTimeField extends Component {
       showDatePicker: this.props.mode !== Constants.MODE_TIME,
       showTimePicker: this.props.mode === Constants.MODE_TIME,
       inputFormat: this.resolvePropsInputFormat(),
-      buttonIcon: this.props.mode === Constants.MODE_TIME ? "time" : "calendar",
+      buttonIcon: this.props.mode === Constants.MODE_TIME ? "fa fa-clock" : "fa fa-calendar",
       widgetStyle: {
         display: "block",
         position: "absolute",
@@ -360,7 +359,9 @@ export default class DateTimeField extends Component {
             />
             <div className="input-group date" ref="datetimepicker">
               <input type="text" className="form-control" onChange={this.onChange} value={this.state.inputValue} {...this.props.inputProps}/>
-              <span className="input-group-addon" onClick={this.onClick} onBlur={this.onBlur} ref="dtpbutton"><Glyphicon glyph={this.state.buttonIcon} /></span>
+              <span className="input-group-addon" onClick={this.onClick} onBlur={this.onBlur} ref="dtpbutton">
+                <i class={this.state.buttonIcon} />
+              </span>
             </div>
           </div>
     );
