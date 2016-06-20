@@ -185,6 +185,9 @@
 .bootstrap-datetimepicker-widget thead tr:first-child th:hover {
   background: #eeeeee;
 }
+.input-group.date .input-group-addon {
+  cursor: pointer;
+}
 .input-group.date .input-group-addon span {
   display: block;
   cursor: pointer;
